@@ -1,0 +1,10 @@
+{
+  "name": "govtech",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alnur_Faisal <alnurfaisal@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-app": "^1.5.2"
+  }
+}
