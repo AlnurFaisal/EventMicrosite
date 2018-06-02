@@ -47,7 +47,7 @@ class Home extends Component {
             <div className="row">
               <div className="col-md-8 col-sm-12 col-xs-12">
                 <h1 className="super">
-                  Designing better services for <br /> the people of Singapore
+                  Designing better services for the people of Singapore
                 </h1>
                 <br />
                 <h4>
@@ -71,7 +71,7 @@ class Home extends Component {
             </div>
           </div>
         </Jumbotron>
-        <Jumbotron className="bottom">
+        <Jumbotron className="bottom noBorder">
           <div class="container-fluid">
             <div class="row">
               <div className="col-md-10 col-sm-12 col-xs-12">
