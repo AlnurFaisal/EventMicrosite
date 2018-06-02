@@ -5,9 +5,9 @@ import {
   NavbarToggler,
   Nav,
   NavItem,
-  NavLink,
   NavbarBrand
 } from "reactstrap";
+import { NavLink } from 'react-router-dom';
 
 const NavigationBar = (props) => (
   <div>
@@ -21,10 +21,10 @@ const NavigationBar = (props) => (
       <Collapse isOpen={props.isOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink>Home</NavLink>
+            <NavLink to="/" className="nav-link">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink>Events</NavLink>
+            <NavLink to="/events" className="nav-link">Events</NavLink>
           </NavItem>
         </Nav>
       </Collapse>
