@@ -7,17 +7,10 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 import "./home.css";
 
 class Home extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isOpen: false
-    };
-  }
-
   render() {
     return (
       <div>
-        <NavigationBar isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} />
+        <NavigationBar />
         <Jumbotron className="banner noBorder">
           <div className="container-fluid">
             <div className="row">
@@ -69,12 +62,6 @@ class Home extends Component {
         </Jumbotron>
       </div>
     );
-  }
-
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
   }
 }
 

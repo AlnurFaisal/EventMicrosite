@@ -1,26 +1,9 @@
-.super {
-  font-weight: bold;
-  font-size: 50px;
-  font-family: 'Arvo', serif !important;
-}
-
-.banner {
-  background-color: white !important;
-}
-
-.noBorder {
-  margin-bottom: 0px !important;
-  padding-bottom: 0px !important;
-}
-
-.bottom {
+.jumbo {
   border-radius: 0 !important;
   border: 1px 0px 0px 0px;
-  border-top-style: solid;
-  border-top-color: #e0e0e0;
 }
 
-.bottom:after {
+.jumbo:after {
   content: ""; /* This is necessary for the pseudo element to work. */
   display: block; /* This will put the pseudo element on its own line. */
   margin: 0 auto; /* This will center the border. */
@@ -29,13 +12,17 @@
   border-bottom: 3px solid #e0e0e0; /* This creates the border. Replace black with whatever color you want. */
 }
 
-.bodyText {
-  color: #757575;
-  padding-top: 10px;
-  line-height: 30px;
+.title {
+  font-weight: 500;
+  font-size: 50px;
+  font-family: 'Arvo', serif !important;
 }
 
-.newButton {
-  border-radius: 25px !important;
-  padding: 10px 50px 10px 50px !important;
+.grey {
+    color: #757575;
+}
+
+.noBorder {
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
 }
