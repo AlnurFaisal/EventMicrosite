@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink,
-  NavbarBrand,
   Jumbotron,
   Button
 } from "reactstrap";
+import NavigationBar from "../NavigationBar/NavigationBar";
 import "./home.css";
 
 class Home extends Component {
@@ -18,31 +12,13 @@ class Home extends Component {
     this.state = {
       isOpen: false
     };
-    this.toggle = this.toggle.bind(this);
   }
 
   render() {
     return (
       <div>
-        <Navbar color="white" light expand="md">
-          <NavbarBrand>
-            <h2>
-              <i class="fas fa-door-open" /> Design
-            </h2>
-          </NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink>Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>Events</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <Jumbotron className="bannerColor noBorder">
+        <NavigationBar isOpen={this.state.isOpen} toggle={this.toggle.bind(this)} />
+        <Jumbotron className="banner noBorder">
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-8 col-sm-12 col-xs-12">
