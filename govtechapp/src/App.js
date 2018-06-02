@@ -1,12 +1,16 @@
 import React, { Component } from "react";
+import { BrowserRouter } from "react-router-dom";
+import MyNav from "./components/MyNav/MyNav";
 
 class App extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
-    return <div />;
+    return (
+      <div>
+        <BrowserRouter>
+          <MyNav />
+        </BrowserRouter>
+      </div>
+    );
   }
 }
 
