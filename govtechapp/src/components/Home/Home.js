@@ -41,8 +41,8 @@ class Home extends Component {
           </div>
         </Jumbotron>
         <Jumbotron className="bottom noBorder">
-          <div class="container-fluid">
-            <div class="row">
+          <div className="container-fluid">
+            <div className="row">
               <div className="col-md-10 col-sm-12 col-xs-12">
                 <h4>
                   <strong>Help us help you</strong>

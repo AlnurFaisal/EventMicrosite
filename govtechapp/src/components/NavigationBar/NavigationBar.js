@@ -25,7 +25,7 @@ class NavigationBar extends Component {
       <Navbar color="white" light expand="md">
         <NavbarBrand>
           <h2>
-            <i class="fas fa-door-open" /> Design
+            <i className="fas fa-door-open" /> Design
           </h2>
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
