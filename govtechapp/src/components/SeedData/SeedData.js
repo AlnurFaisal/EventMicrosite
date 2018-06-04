@@ -22,7 +22,7 @@ export const calendarDate = daysLength => {
     const days = [0];
     days[0] = {};
     for(let i = 1; i <= daysLength; i++){
-       days[0]['i'] = {empty: false, active: false, selected: false, workshop: [], talk: []}; 
+       days[0][i] = {empty: false, active: false, selected: false, workshop: [], talk: []}; 
     }
 
     return days;

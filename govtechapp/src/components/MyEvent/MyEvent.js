@@ -15,10 +15,21 @@ class MyEvent extends Component {
           may: { days: 31, startDay: "Tue" }
         }
       ],
-      calandarDates: []
+      eventDates: []
     };
+
+    this.generateEventDates = this.generateEventDates.bind(this);
   }
+
+  componentWillMount() {
+    const eventDates = this.generateEventDates();
+    this.setState({
+      eventDates: eventDates
+    });
+  }
+
   render() {
+    console.log(this.state.eventDates);
     return (
       <div>
         <NavigationBar />
@@ -37,6 +48,7 @@ class MyEvent extends Component {
                 <h4 className="month">May 2018</h4>
                 <br />
                 <br />
+                <Calendar months={this.state.months} />
               </div>
             </div>
           </div>
@@ -44,6 +56,36 @@ class MyEvent extends Component {
       </div>
     );
   }
+
+  generateEventDates() {
+    const Workshops = Workshop();
+    const Talks = Talk();
+    console.log(Workshops);
+    console.log(Talks);
+    let calendarDates = calendarDate(this.state.months[0].may.days);
+    // find all workshop/talk events and map using the id to the relavant dates
+    let Workshops_length = Workshops.length;
+    let Talks_length = Talks.length;
+    let obj = calendarDates[0];
+    for(let i = 0; i < Workshops_length; i++){
+      Object.keys(obj).forEach(key => {
+        if(Workshops[i].date === parseInt(key)) {
+          obj[key].workshop.push(Workshops[i].id);
+        }
+      });
+    }
+
+    for(let i = 0; i < Talks_length; i++){
+      Object.keys(obj).forEach(key => {
+        if(Talks[i].date === parseInt(key)) {
+          obj[key].talk.push(Talks[i].id);
+        }
+      });
+    }
+    
+    return calendarDates;
+  }
+  
 }
 
 export default MyEvent;
