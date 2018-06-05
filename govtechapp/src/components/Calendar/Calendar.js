@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Square from "../Square/Square";
 import "./calendar.css";
 
 class Calendar extends Component {
@@ -65,8 +66,17 @@ class Calendar extends Component {
                     <strong>Sat</strong>
                   </p>
                 </div>
-                <br />
-                {}
+                {this.state.dates.map((element, i) => {
+                  return (
+                    <Square
+                      index={i}
+                      key={i}
+                      cDate={element}
+                      handleClick={this.props.handleClick}
+                      eventDate={null}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -94,7 +104,7 @@ class Calendar extends Component {
         nextMonthDate++;
       } else {
         console.log("Now Here!");
-        dates[i] = (i + 1) - currMonthDayValue;
+        dates[i] = i + 1 - currMonthDayValue;
       }
     }
 

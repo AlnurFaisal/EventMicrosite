@@ -21,7 +21,7 @@ export const Talk = () => {
 export const calendarDate = daysLength => {
     const days = [daysLength];
     for(let i = 0; i < daysLength; i++){
-       days[i] = {empty: false, active: false, selected: false, workshop: [], talk: []}; 
+       days[i] = {index: i, empty: false, active: false, selected: false, workshop: [], talk: []}; 
     }
 
     return days;

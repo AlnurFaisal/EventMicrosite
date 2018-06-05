@@ -53,11 +53,26 @@ class MyEvent extends Component {
               eventDates={this.state.eventDates}
               getWorkshopTitle={this.getWorkshopTitle.bind(this)}
               getTalkTitle={this.getTalkTitle.bind(this)}
+              handleClick={this.handleClick.bind(this)}
             />
           </div>
         </Jumbotron>
       </div>
     );
+  }
+
+  handleClick(index) {
+    // use the index value to identify with index in the eventdates to change the selected value
+    let copyEventDates = this.state.eventDates;
+    if(index !== null){
+      let selectedDate = this.state.eventDates[index];
+      selectedDate.selected = true;
+      copyEventDates[index] = selectedDate;
+      this.setState({
+        selected: true,
+        eventDates: copyEventDates
+      });
+    }
   }
 
   getWorkshopTitle(id) {
