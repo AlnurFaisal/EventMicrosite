@@ -10,12 +10,15 @@ class MyEvent extends Component {
     super();
     this.state = {
       months: [
-        {   
+        {
           april: { days: 30, startDay: "Sun" },
           may: { days: 31, startDay: "Tue" }
         }
       ],
-      eventDates: []
+      eventDates: [],
+      selected: false,
+      workshops: Workshop(),
+      talks: Talk()
     };
 
     this.generateEventDates = this.generateEventDates.bind(this);
@@ -30,6 +33,8 @@ class MyEvent extends Component {
 
   render() {
     console.log(this.state.eventDates);
+    console.log(this.state.workshops);
+    console.log(this.state.talks);
     return (
       <div>
         <NavigationBar />
@@ -43,18 +48,36 @@ class MyEvent extends Component {
                 </p>
               </div>
             </div>
-            <div className="row calendar">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <h4 className="month">May 2018</h4>
-                <br />
-                <br />
-                <Calendar months={this.state.months} />
-              </div>
-            </div>
+            <Calendar
+              months={this.state.months}
+              eventDates={this.state.eventDates}
+              getWorkshopTitle={this.getWorkshopTitle.bind(this)}
+              getTalkTitle={this.getTalkTitle.bind(this)}
+            />
           </div>
         </Jumbotron>
       </div>
     );
+  }
+
+  getWorkshopTitle(id) {
+    const workshops = this.state.workshops;
+
+    for (let i = 0; i < workshops.length; i++) {
+      if (workshops[i].id === id) {
+        return workshops[i].title;
+      }
+    }
+  }
+
+  getTalkTitle(id) {
+    const talks = this.state.talks;
+
+    for (let i = 0; i < talks.length; i++) {
+      if (talks[i].id === id) {
+        return talks[i].title;
+      }
+    }
   }
 
   generateEventDates() {
@@ -64,28 +87,25 @@ class MyEvent extends Component {
     console.log(Talks);
     let calendarDates = calendarDate(this.state.months[0].may.days);
     // find all workshop/talk events and map using the id to the relavant dates
-    let Workshops_length = Workshops.length;
-    let Talks_length = Talks.length;
-    let obj = calendarDates[0];
-    for(let i = 0; i < Workshops_length; i++){
-      Object.keys(obj).forEach(key => {
-        if(Workshops[i].date === parseInt(key)) {
-          obj[key].workshop.push(Workshops[i].id);
+
+    for (let i = 0; i < Workshops.length; i++) {
+      for (let j = 0; j < calendarDates.length; j++) {
+        if (Workshops[i].date === j + 1) {
+          calendarDates[j].workshop.push(Workshops[i].id);
         }
-      });
+      }
     }
 
-    for(let i = 0; i < Talks_length; i++){
-      Object.keys(obj).forEach(key => {
-        if(Talks[i].date === parseInt(key)) {
-          obj[key].talk.push(Talks[i].id);
+    for (let i = 0; i < Talks.length; i++) {
+      for (let j = 0; j < calendarDates.length; j++) {
+        if (Talks[i].date === j + 1) {
+          calendarDates[j].talk.push(Talks[i].id);
         }
-      });
+      }
     }
-    
+
     return calendarDates;
   }
-  
 }
 
 export default MyEvent;

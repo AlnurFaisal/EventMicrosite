@@ -1,0 +1,20 @@
+.calendar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    padding: 10px 10px;
+}
+
+.calendar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+  
+.month {
+    font-weight: bolder;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.day {
+   padding: 5px 5px; 
+}
