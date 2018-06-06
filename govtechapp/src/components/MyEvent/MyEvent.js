@@ -32,9 +32,9 @@ class MyEvent extends Component {
   }
 
   render() {
-    console.log(this.state.eventDates);
-    console.log(this.state.workshops);
-    console.log(this.state.talks);
+    //console.log(this.state.eventDates);
+    //console.log(this.state.workshops);
+    //console.log(this.state.talks);
     return (
       <div>
         <NavigationBar />
@@ -51,9 +51,9 @@ class MyEvent extends Component {
             <Calendar
               months={this.state.months}
               eventDates={this.state.eventDates}
-              getWorkshopTitle={this.getWorkshopTitle.bind(this)}
-              getTalkTitle={this.getTalkTitle.bind(this)}
-              handleClick={this.handleClick.bind(this)}
+              getWorkshopDetails={this.getWorkshopDetails.bind(this)}
+              getTalkDetails={this.getTalkDetails.bind(this)}
+              //handleClick={this.handleClick.bind(this)}
             />
           </div>
         </Jumbotron>
@@ -61,45 +61,52 @@ class MyEvent extends Component {
     );
   }
 
-  handleClick(index) {
+  /*handleClick(index) {
     // use the index value to identify with index in the eventdates to change the selected value
     let copyEventDates = this.state.eventDates;
-    if(index !== null){
-      let selectedDate = this.state.eventDates[index];
-      selectedDate.selected = true;
-      copyEventDates[index] = selectedDate;
-      this.setState({
-        selected: true,
-        eventDates: copyEventDates
-      });
-    }
-  }
+    let selectedDate = this.state.eventDates[index];
+    selectedDate.selected = true;
+    copyEventDates[index] = selectedDate;
+    this.setState({
+      selected: true,
+      eventDates: copyEventDates
+    });
+  }*/
 
-  getWorkshopTitle(id) {
+  getWorkshopDetails(id) {
     const workshops = this.state.workshops;
+    const details = {title: null, startTime: null, type: "workshop"};
+    let store = null;
 
     for (let i = 0; i < workshops.length; i++) {
       if (workshops[i].id === id) {
-        return workshops[i].title;
+        store = workshops[i].title.substring(0, 12);
+        details.title = store;
+        details.startTime = workshops[i].startTime
       }
     }
+    return details;
   }
 
-  getTalkTitle(id) {
+  getTalkDetails(id) {
     const talks = this.state.talks;
+    const details = {title: null, startTime: null, type: "talk"};
+    let store = null;
 
     for (let i = 0; i < talks.length; i++) {
       if (talks[i].id === id) {
-        return talks[i].title;
+        console.log("I am here!");
+        store = talks[i].title.substring(0, 10);
+        details.title = store;
+        details.startTime = talks[i].startTime;
       }
     }
+    return details;
   }
 
   generateEventDates() {
-    const Workshops = Workshop();
-    const Talks = Talk();
-    console.log(Workshops);
-    console.log(Talks);
+    const Workshops = this.state.workshops;
+    const Talks = this.state.talks;
     let calendarDates = calendarDate(this.state.months[0].may.days);
     // find all workshop/talk events and map using the id to the relavant dates
 

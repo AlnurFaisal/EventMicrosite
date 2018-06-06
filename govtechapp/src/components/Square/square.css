@@ -3,7 +3,16 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 10px;
-    padding-bottom: 90px;
-
+    padding-bottom: 10px;
+    height: 150px;
     background-color: white;
+}
+
+.talk {
+    color: #1976D2;
+    padding-left: 10px;
+}
+
+.workshop {
+    color: #673AB7;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Square from "../Square/Square";
+import GreyedSquare from "../GreyedSquare/GreyedSquare";
 import "./calendar.css";
 
 class Calendar extends Component {
@@ -23,7 +24,9 @@ class Calendar extends Component {
   }
 
   render() {
-    console.log(this.state.dates);
+    //console.log(this.state.dates);
+    const currMonthStartDay = this.state.currentMonth.startDay;
+    const currMonthDayValue = this.state.dayValue[currMonthStartDay];
     return (
       <div className="row calendar">
         <div className="col-md-12 col-sm-12 col-xs-12">
@@ -67,16 +70,28 @@ class Calendar extends Component {
                   </p>
                 </div>
                 {this.state.dates.map((element, i) => {
-                  return (
-                    <Square
-                      index={i}
-                      key={i}
-                      cDate={element}
-                      handleClick={this.props.handleClick}
-                      eventDate={null}
-                    />
-                  );
+                  if (
+                    i < this.state.currentMonth.days + currMonthDayValue &&
+                    i >= currMonthDayValue
+                  ) {
+                    return (
+                      <Square
+                        index={i}
+                        key={i}
+                        cDate={element}
+                        //handleClick={this.props.handleClick}
+                        eventDate={this.props.eventDates[i - currMonthDayValue]}
+                        getWorkshopDetails={this.props.getWorkshopDetails}
+                        getTalkDetails={this.props.getTalkDetails}
+                      />
+                    );
+                  } else {
+                    return <GreyedSquare index={i} key={i} cDate={element} />;
+                  }
                 })}
+                <br />
+                Workshop<span className="dot workshop_dot" /><br />
+                <span className="talk_text">Talk</span><span className="dot talk_dot" />
               </div>
             </div>
           </div>
