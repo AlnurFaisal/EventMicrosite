@@ -24,7 +24,7 @@
   width: 25px;
   margin-top: 25px;
   border-radius: 50%;
-  margin-left: -65px;
+  margin-left: -50px;
 }
 
 .workshop_dot {
@@ -33,11 +33,19 @@
 
 .talk_dot {
     background-color: #1976D2;
-    margin-left: -420px;
+    margin-left: -330px;
     margin-top: 25px;
 }
 
 .talk_text {
-    margin-left: -310px;
+    margin-left: -240px;
     margin-top: 25px;
+}
+
+.showSide {
+   display: block !important; 
+}
+
+.hideSide {
+    display: none !important;
 }

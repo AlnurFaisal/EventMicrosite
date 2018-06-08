@@ -5,10 +5,11 @@ class Square extends Component {
     super(props);
     this.state = {
       selected: props.eventDate.selected,
+      active: props.eventDate.active,
+      empty: props.eventDate.empty,
       index: props.eventDate.index,
       workshopIds: props.eventDate.workshop,
       talkIds: props.eventDate.talk,
-      colours: { workshop: "#673AB7", talk: "#1976D2" },
       events: []
     };
 
@@ -17,28 +18,38 @@ class Square extends Component {
     this.miliseconds = this.miliseconds.bind(this);
     this.compare = this.compare.bind(this);
     this.sortEvent = this.sortEvent.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.getEventTitleList = this.getEventTitleList.bind(this);
+    this.getEventTimeList = this.getEventTimeList.bind(this);
+    this.getEventTypeList = this.getEventTypeList.bind(this);
+    this.getEventSpeakerList = this.getEventSpeakerList.bind(this);
   }
 
   componentWillMount() {
     const events = this.sortEvent();
     if (events) {
       this.setState({
-        events: [...events]
+        events: [...events],
+        active: true,
+        empty: false
+      });
+    } else {
+      this.setState({
+        empty: true,
+        active: false
       });
     }
   }
 
   render() {
-    console.log(this.getWorkshop());
-    console.log(this.getTalk());
-    console.log(this.state.workshopIds.length);
-    console.log(this.state.events);
+    console.log(this.props.cDate);
+    console.log(this.getEventTimeList());
     return (
-      <div
-        className="squareStyle"
-        //onClick={this.props.handleClick(this.state.index)}
-      >
-        <p className={this.state.selected ? "selected" : "notselected"}>
+      <div className="squareStyle" onClick={this.handleClick}>
+        <p
+          id={this.state.active ? "active" : "empty"}
+          className={this.state.selected ? "selected" : "notSelected"}
+        >
           <strong>{this.props.cDate}</strong>
         </p>
         <br />
@@ -46,7 +57,7 @@ class Square extends Component {
           {this.state.events.map((elements, i) => {
             return (
               <div>
-                <span className={elements.type}>{elements.title}..</span>
+                <span className={elements.type}>{elements.short}..</span>
                 <br />
               </div>
             );
@@ -54,6 +65,65 @@ class Square extends Component {
         </p>
       </div>
     );
+  }
+
+  handleClick() {
+    if (this.state.active) {
+      this.setState({
+        selected: true
+      });
+      this.props.toggleSidebar(
+        this.props.cDate,
+        this.getEventTimeList(),
+        this.getEventTitleList(),
+        this.getEventTypeList(),
+        this.getEventSpeakerList()
+      );
+    }
+  }
+
+  getEventSpeakerList() {
+    const copyEvents = this.state.events;
+    if (this.state.active) {
+      let eventSpeaker = [];
+      for (let i = 0; i < copyEvents.length; i++) {
+        eventSpeaker.push(copyEvents[i].speaker);
+      }
+      return eventSpeaker;
+    }
+  }
+
+  getEventTypeList() {
+    const copyEvents = this.state.events;
+    if (this.state.active) {
+      let eventType = [];
+      for (let i = 0; i < copyEvents.length; i++) {
+        eventType.push(copyEvents[i].type);
+      }
+      return eventType;
+    }
+  }
+
+  getEventTitleList() {
+    const copyEvents = this.state.events;
+    if (this.state.active) {
+      let eventTitles = [];
+      for (let i = 0; i < copyEvents.length; i++) {
+        eventTitles.push(copyEvents[i].title);
+      }
+      return eventTitles;
+    }
+  }
+
+  getEventTimeList() {
+    const copyEvents = this.state.events;
+    if (this.state.active) {
+      let eventTime = [];
+      for (let i = 0; i < copyEvents.length; i++) {
+        eventTime.push(copyEvents[i].time);
+      }
+      return eventTime;
+    }
   }
 
   sortEvent() {

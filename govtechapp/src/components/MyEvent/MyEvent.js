@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NavigationBar from "../NavigationBar/NavigationBar";
-import { Jumbotron, Card, CardHeader, CardBody } from "reactstrap";
+import { Jumbotron } from "reactstrap";
 import { Workshop, Talk, calendarDate } from "../SeedData/SeedData";
 import Calendar from "../Calendar/Calendar";
 import "./myevent.css";
@@ -16,7 +16,6 @@ class MyEvent extends Component {
         }
       ],
       eventDates: [],
-      selected: false,
       workshops: Workshop(),
       talks: Talk()
     };
@@ -53,7 +52,6 @@ class MyEvent extends Component {
               eventDates={this.state.eventDates}
               getWorkshopDetails={this.getWorkshopDetails.bind(this)}
               getTalkDetails={this.getTalkDetails.bind(this)}
-              //handleClick={this.handleClick.bind(this)}
             />
           </div>
         </Jumbotron>
@@ -61,28 +59,26 @@ class MyEvent extends Component {
     );
   }
 
-  /*handleClick(index) {
-    // use the index value to identify with index in the eventdates to change the selected value
-    let copyEventDates = this.state.eventDates;
-    let selectedDate = this.state.eventDates[index];
-    selectedDate.selected = true;
-    copyEventDates[index] = selectedDate;
-    this.setState({
-      selected: true,
-      eventDates: copyEventDates
-    });
-  }*/
-
   getWorkshopDetails(id) {
     const workshops = this.state.workshops;
-    const details = {title: null, startTime: null, type: "workshop"};
+    const details = {
+      short: null,
+      title: null,
+      startTime: null,
+      type: "workshop",
+      time: null,
+      speaker: null
+    };
     let store = null;
 
     for (let i = 0; i < workshops.length; i++) {
       if (workshops[i].id === id) {
         store = workshops[i].title.substring(0, 12);
-        details.title = store;
-        details.startTime = workshops[i].startTime
+        details.short = store;
+        details.startTime = workshops[i].startTime;
+        details.time = workshops[i].time;
+        details.title = workshops[i].title;
+        details.speaker = workshops[i].speaker;
       }
     }
     return details;
@@ -90,15 +86,25 @@ class MyEvent extends Component {
 
   getTalkDetails(id) {
     const talks = this.state.talks;
-    const details = {title: null, startTime: null, type: "talk"};
+    const details = {
+      short: null,
+      title: null,
+      startTime: null,
+      type: "talk",
+      time: null,
+      speaker: null
+    };
     let store = null;
 
     for (let i = 0; i < talks.length; i++) {
       if (talks[i].id === id) {
         console.log("I am here!");
         store = talks[i].title.substring(0, 10);
-        details.title = store;
+        details.short = store;
         details.startTime = talks[i].startTime;
+        details.time = talks[i].time;
+        details.title = talks[i].title;
+        details.speaker = talks[i].speaker;
       }
     }
     return details;
