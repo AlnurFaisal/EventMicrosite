@@ -2,11 +2,10 @@ import React from "react";
 
 const Details = props => (
   <div>
-    <p>props.time</p>
+    <p>{props.time}</p>
+    <p>{props.title}</p>
+    <p>{props.speaker}</p>
     <br />
-    <p>props.title</p>
-    <br />
-    <p>props.speaker</p>
   </div>
 );
 

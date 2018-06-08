@@ -4,10 +4,10 @@ class Square extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: props.eventDate.selected,
+      selected: null,
       active: props.eventDate.active,
       empty: props.eventDate.empty,
-      index: props.eventDate.index,
+      index: props.index,
       workshopIds: props.eventDate.workshop,
       talkIds: props.eventDate.talk,
       events: []
@@ -28,6 +28,7 @@ class Square extends Component {
   componentWillMount() {
     const events = this.sortEvent();
     if (events) {
+      console.log(this.props.eventDate.selected);
       this.setState({
         events: [...events],
         active: true,
@@ -41,9 +42,15 @@ class Square extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      selected: this.props.eventDate.selected
+    });
+  }
+
+
+
   render() {
-    console.log(this.props.cDate);
-    console.log(this.getEventTimeList());
     return (
       <div className="squareStyle" onClick={this.handleClick}>
         <p
@@ -53,32 +60,30 @@ class Square extends Component {
           <strong>{this.props.cDate}</strong>
         </p>
         <br />
-        <p>
-          {this.state.events.map((elements, i) => {
-            return (
-              <div>
-                <span className={elements.type}>{elements.short}..</span>
-                <br />
-              </div>
-            );
-          })}
-        </p>
+        {this.state.events.map((elements, i) => {
+          return (
+            <div key={i}>
+              <span className={elements.type}>{elements.short}..</span>
+              <br />
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   handleClick() {
     if (this.state.active) {
-      this.setState({
-        selected: true
-      });
       this.props.toggleSidebar(
         this.props.cDate,
         this.getEventTimeList(),
         this.getEventTitleList(),
         this.getEventTypeList(),
-        this.getEventSpeakerList()
+        this.getEventSpeakerList(),
+        this.state.index
       );
+    } else {
+      this.props.toggleSidebar(null, null, null, null, null, null);
     }
   }
 

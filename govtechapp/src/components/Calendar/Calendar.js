@@ -12,6 +12,8 @@ class Calendar extends Component {
       currentMonth: props.months[0].may,
       previousMonth: props.months[0].april,
       dayValue: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
+      currSelectedIndex: null,
+      eventDates: props.eventDates,
       showSidebar: false,
       sideDate: null,
       sideTime: [],
@@ -22,26 +24,6 @@ class Calendar extends Component {
     };
 
     this.generateDates = this.generateDates.bind(this);
-    this.sidebar = (
-      <div className="col-md-3 col-xs-12">
-        <Card className={this.state.showSidebar ? "showSide" : "hideSide"}>
-          <CardHeader>{this.state.sideDate} May 2018</CardHeader>
-          <CardBody>
-            {this.state.sideTime.map((element, i) => {
-              return (
-                <Details
-                  key={i}
-                  time={element}
-                  title={this.state.sideTitle[i]}
-                  type={this.state.sideType[i]}
-                  speaker={this.state.sideSpeaker[i]}
-                />
-              );
-            })}
-          </CardBody>
-        </Card>
-      </div>
-    );
   }
 
   componentWillMount() {
@@ -52,7 +34,6 @@ class Calendar extends Component {
   }
 
   render() {
-    console.log(this.state.sideDate);
     const currMonthStartDay = this.state.currentMonth.startDay;
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];
     return (
@@ -105,8 +86,9 @@ class Calendar extends Component {
                     return (
                       <Square
                         key={i}
+                        index={i}
                         cDate={element}
-                        eventDate={this.props.eventDates[i - currMonthDayValue]}
+                        eventDate={this.state.eventDates[i - currMonthDayValue]}
                         getWorkshopDetails={this.props.getWorkshopDetails}
                         getTalkDetails={this.props.getTalkDetails}
                         toggleSidebar={this.toggleSidebar.bind(this)}
@@ -123,22 +105,105 @@ class Calendar extends Component {
                 <span className="dot talk_dot" />
               </div>
             </div>
-            {this.sidebar}
+            <div className="col-md-3 col-xs-12">
+              <Card
+                className={this.state.showSidebar ? "showSide" : "hideSide"}
+              >
+                <CardHeader>{this.state.sideDate} May 2018</CardHeader>
+                <CardBody>
+                  {this.state.sideTime &&
+                    this.state.sideTime.map((element, i) => {
+                      return (
+                        <Details
+                          key={i}
+                          time={element}
+                          title={this.state.sideTitle[i]}
+                          type={this.state.sideType[i]}
+                          speaker={this.state.sideSpeaker[i]}
+                        />
+                      );
+                    })}
+                </CardBody>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  toggleSidebar(sideDate, sideTime, sideTitle, sideType, sideSpeaker) {
-    this.setState({
-      showSidebar: true,
-      sideDate: sideDate,
-      sideTime: [...sideTime],
-      sideTitle: [...sideTitle],
-      sideType: [...sideType],
-      sideSpeaker: [...sideSpeaker]
-    });
+  toggleSidebar(sideDate, sideTime, sideTitle, sideType, sideSpeaker, index) {
+    const currMonthStartDay = this.state.currentMonth.startDay;
+    const currMonthDayValue = this.state.dayValue[currMonthStartDay];
+    let eventDates = this.state.eventDates;
+    let eventDate = this.state.eventDates[index - currMonthDayValue];
+    let prevSelectEventDate = this.state.eventDates[
+      this.state.currSelectedIndex - currMonthDayValue
+    ];
+    if (sideDate === null && this.state.currSelectedIndex) {
+      console.log(prevSelectEventDate);
+      prevSelectEventDate.selected = false;
+      console.log(prevSelectEventDate);
+      eventDates[
+        this.state.currSelectedIndex - currMonthDayValue
+      ] = prevSelectEventDate;
+      console.log(eventDates);
+      this.setState({
+        showSidebar: false,
+        sideDate: sideDate,
+        sideTime: sideTime,
+        sideTitle: sideTitle,
+        sideType: sideType,
+        sideSpeaker: sideSpeaker,
+        eventDates: eventDates,
+        currSelectedIndex: null
+      });
+    } else if (sideDate === null && !this.state.currSelectedIndex) {
+      this.setState({
+        showSidebar: false,
+        sideDate: sideDate,
+        sideTime: sideTime,
+        sideTitle: sideTitle,
+        sideType: sideType,
+        sideSpeaker: sideSpeaker
+      });
+    } else if (sideDate && !this.state.currSelectedIndex) {
+      console.log(eventDate);
+      eventDate.selected = true;
+      console.log(eventDate);
+      eventDates[index - currMonthDayValue] = eventDate;
+      console.log(eventDates);
+      this.setState({
+        showSidebar: true,
+        sideDate: sideDate,
+        sideTime: [...sideTime],
+        sideTitle: [...sideTitle],
+        sideType: [...sideType],
+        sideSpeaker: [...sideSpeaker],
+        eventDates: eventDates,
+        currSelectedIndex: index
+      });
+    } else {
+      console.log(eventDate);
+      eventDate.selected = true;
+      prevSelectEventDate.selected = false;
+      console.log(eventDate);
+      eventDates[index - currMonthDayValue] = eventDate;
+      eventDates[
+        this.state.currSelectedIndex - currMonthDayValue
+      ] = prevSelectEventDate;
+      console.log(eventDates);
+      this.setState({
+        showSidebar: true,
+        sideDate: sideDate,
+        sideTime: [...sideTime],
+        sideTitle: [...sideTitle],
+        sideType: [...sideType],
+        sideSpeaker: [...sideSpeaker],
+        eventDates: eventDates,
+        currSelectedIndex: index
+      });
+    }
   }
 
   generateDates() {

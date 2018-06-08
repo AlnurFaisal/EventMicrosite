@@ -31,9 +31,6 @@ class MyEvent extends Component {
   }
 
   render() {
-    //console.log(this.state.eventDates);
-    //console.log(this.state.workshops);
-    //console.log(this.state.talks);
     return (
       <div>
         <NavigationBar />

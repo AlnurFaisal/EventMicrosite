@@ -28,16 +28,16 @@
 
 .selected {
   border-radius: 100px;
-  width: 28px;
-  height: 26px;
-  padding-left: 4px;
+  width: 27px;
+  height: 27px;
+  padding-left: 3.5px;
   background-color: black !important;
   color: white;
 }
 
 .notSelected {
   border-radius: 100px;
-  width: 28px;
-  height: 26px;
-  padding-left: 4px;
+  width: 27px;
+  height: 27px;
+  padding-left: 3.5px;
 }
