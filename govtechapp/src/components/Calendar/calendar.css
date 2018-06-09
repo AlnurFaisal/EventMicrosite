@@ -49,3 +49,27 @@
 .hideSide {
     display: none !important;
 }
+
+.sidebar_body {
+  border-radius: 0px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  padding-top: 25px !important;
+  padding-bottom: 15px !important; 
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  background-color: #e9ecef !important;
+  border-color: black !important;
+}
+
+.sidebar_header {
+  border-radius: 0px !important;
+  border-width: 0px !important;
+  background-color: black !important;
+  color: white;
+  font-weight: bolder
+}
+
+.sidebar {
+  padding-top: 60px;
+}

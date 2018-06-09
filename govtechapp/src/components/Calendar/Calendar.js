@@ -105,12 +105,12 @@ class Calendar extends Component {
                 <span className="dot talk_dot" />
               </div>
             </div>
-            <div className="col-md-3 col-xs-12">
+            <div className="col-md-3 col-xs-12 sidebar">
               <Card
                 className={this.state.showSidebar ? "showSide" : "hideSide"}
               >
-                <CardHeader>{this.state.sideDate} May 2018</CardHeader>
-                <CardBody>
+                <CardHeader className="sidebar_header">{this.state.sideDate} May 2018</CardHeader>
+                <CardBody className="sidebar_body">
                   {this.state.sideTime &&
                     this.state.sideTime.map((element, i) => {
                       return (
