@@ -109,7 +109,9 @@ class Calendar extends Component {
               <Card
                 className={this.state.showSidebar ? "showSide" : "hideSide"}
               >
-                <CardHeader className="sidebar_header">{this.state.sideDate} May 2018</CardHeader>
+                <CardHeader className="sidebar_header">
+                  {this.state.sideDate} May 2018
+                </CardHeader>
                 <CardBody className="sidebar_body">
                   {this.state.sideTime &&
                     this.state.sideTime.map((element, i) => {
@@ -184,25 +186,27 @@ class Calendar extends Component {
         currSelectedIndex: index
       });
     } else {
-      console.log(eventDate);
-      eventDate.selected = true;
-      prevSelectEventDate.selected = false;
-      console.log(eventDate);
-      eventDates[index - currMonthDayValue] = eventDate;
-      eventDates[
-        this.state.currSelectedIndex - currMonthDayValue
-      ] = prevSelectEventDate;
-      console.log(eventDates);
-      this.setState({
-        showSidebar: true,
-        sideDate: sideDate,
-        sideTime: [...sideTime],
-        sideTitle: [...sideTitle],
-        sideType: [...sideType],
-        sideSpeaker: [...sideSpeaker],
-        eventDates: eventDates,
-        currSelectedIndex: index
-      });
+      if (this.state.currSelectedIndex !== index) {
+        console.log(eventDate);
+        eventDate.selected = true;
+        prevSelectEventDate.selected = false;
+        console.log(eventDate);
+        eventDates[
+          this.state.currSelectedIndex - currMonthDayValue
+        ] = prevSelectEventDate;
+        eventDates[index - currMonthDayValue] = eventDate;
+        console.log(eventDates);
+        this.setState({
+          showSidebar: true,
+          sideDate: sideDate,
+          sideTime: [...sideTime],
+          sideTitle: [...sideTitle],
+          sideType: [...sideType],
+          sideSpeaker: [...sideSpeaker],
+          eventDates: eventDates,
+          currSelectedIndex: index
+        });
+      }
     }
   }
 
