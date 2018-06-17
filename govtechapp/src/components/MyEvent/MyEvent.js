@@ -17,7 +17,8 @@ class MyEvent extends Component {
       ],
       eventDates: [],
       workshops: Workshop(),
-      talks: Talk()
+      talks: Talk(),
+      currentMonth: new Date()
     };
 
     this.generateEventDates = this.generateEventDates.bind(this);
@@ -49,6 +50,9 @@ class MyEvent extends Component {
               eventDates={this.state.eventDates}
               getWorkshopDetails={this.getWorkshopDetails.bind(this)}
               getTalkDetails={this.getTalkDetails.bind(this)}
+              prevMonth={this.prevMonth.bind(this)}
+              nextMonth={this.nextMonth.bind(this)}
+              currMonth={this.state.currentMonth}
             />
           </div>
         </Jumbotron>
@@ -79,6 +83,14 @@ class MyEvent extends Component {
       }
     }
     return details;
+  }
+
+  nextMonth() {
+
+  }
+
+  prevMonth() {
+
   }
 
   getTalkDetails(id) {

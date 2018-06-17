@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
+import dateFns from "date-fns";
 import Square from "../Square/Square";
 import GreyedSquare from "../GreyedSquare/GreyedSquare";
 import Details from "../Details/Details";
@@ -39,7 +40,11 @@ class Calendar extends Component {
     return (
       <div className="row calendar">
         <div className="col-md-12 col-sm-12 col-xs-12">
-          <h4 className="month">May 2018</h4>
+          <h2 className="month">
+            <i class="fas fa-arrow-circle-left icon" />{" "}
+            {dateFns.format(this.props.currMonth, "MMMM YYYY")}{" "}
+            <i class="fas fa-arrow-circle-right icon" />
+          </h2>
           <div className="row">
             <div className="col-md-9 col-xs-12">
               <div className="calendar-grid">
