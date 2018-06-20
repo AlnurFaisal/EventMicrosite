@@ -10,9 +10,7 @@ class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMonth: props.months[0].may,
-      previousMonth: props.months[0].april,
-      dayValue: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
+      currentMonth: props.currMonth,
       currSelectedIndex: null,
       eventDates: props.eventDates,
       showSidebar: false,
@@ -148,13 +146,10 @@ class Calendar extends Component {
       this.state.currSelectedIndex - currMonthDayValue
     ];
     if (sideDate === null && this.state.currSelectedIndex) {
-      console.log(prevSelectEventDate);
       prevSelectEventDate.selected = false;
-      console.log(prevSelectEventDate);
       eventDates[
         this.state.currSelectedIndex - currMonthDayValue
       ] = prevSelectEventDate;
-      console.log(eventDates);
       this.setState({
         showSidebar: false,
         sideDate: sideDate,
@@ -175,11 +170,8 @@ class Calendar extends Component {
         sideSpeaker: sideSpeaker
       });
     } else if (sideDate && !this.state.currSelectedIndex) {
-      console.log(eventDate);
       eventDate.selected = true;
-      console.log(eventDate);
       eventDates[index - currMonthDayValue] = eventDate;
-      console.log(eventDates);
       this.setState({
         showSidebar: true,
         sideDate: sideDate,
@@ -192,15 +184,12 @@ class Calendar extends Component {
       });
     } else {
       if (this.state.currSelectedIndex !== index) {
-        console.log(eventDate);
         eventDate.selected = true;
         prevSelectEventDate.selected = false;
-        console.log(eventDate);
         eventDates[
           this.state.currSelectedIndex - currMonthDayValue
         ] = prevSelectEventDate;
         eventDates[index - currMonthDayValue] = eventDate;
-        console.log(eventDates);
         this.setState({
           showSidebar: true,
           sideDate: sideDate,
@@ -216,6 +205,7 @@ class Calendar extends Component {
   }
 
   generateDates() {
+    // use the date-fns module to reduce the lines of code to generate the dates for the calendar component
     const dates = [];
     const currMonthStartDay = this.state.currentMonth.startDay;
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];

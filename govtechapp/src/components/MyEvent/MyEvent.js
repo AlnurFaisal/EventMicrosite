@@ -3,18 +3,13 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 import { Jumbotron } from "reactstrap";
 import { Workshop, Talk, calendarDate } from "../SeedData/SeedData";
 import Calendar from "../Calendar/Calendar";
+import getDaysInMonth from 'date-fns/get_days_in_month'
 import "./myevent.css";
 
 class MyEvent extends Component {
   constructor() {
     super();
     this.state = {
-      months: [
-        {
-          april: { days: 30, startDay: "Sun" },
-          may: { days: 31, startDay: "Tue" }
-        }
-      ],
       eventDates: [],
       workshops: Workshop(),
       talks: Talk(),
@@ -32,6 +27,7 @@ class MyEvent extends Component {
   }
 
   render() {
+    console.log(this.state.eventDates);
     return (
       <div>
         <NavigationBar />
@@ -46,7 +42,6 @@ class MyEvent extends Component {
               </div>
             </div>
             <Calendar
-              months={this.state.months}
               eventDates={this.state.eventDates}
               getWorkshopDetails={this.getWorkshopDetails.bind(this)}
               getTalkDetails={this.getTalkDetails.bind(this)}
@@ -122,7 +117,7 @@ class MyEvent extends Component {
   generateEventDates() {
     const Workshops = this.state.workshops;
     const Talks = this.state.talks;
-    let calendarDates = calendarDate(this.state.months[0].may.days);
+    let calendarDates = calendarDate(getDaysInMonth(this.state.currentMonth));
     // find all workshop/talk events and map using the id to the relavant dates
 
     for (let i = 0; i < Workshops.length; i++) {
