@@ -9,6 +9,20 @@
   cursor: pointer;
 }
 
+.squareStyleSelected {
+  border-top: 1px solid #eee; 
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-left: 4px solid #1976d2;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  height: 150px;
+  background-color: white;
+  cursor: pointer;
+}
+
 .talk {
   color: #1976d2;
   padding-left: 10px;

@@ -5,6 +5,7 @@ class Square extends Component {
     super(props);
     this.state = {
       selected: null,
+      selectedDate: props.checkSelectedDate(props.cDate),
       active: props.eventDate.active,
       empty: props.eventDate.empty,
       index: props.index,
@@ -52,7 +53,7 @@ class Square extends Component {
 
   render() {
     return (
-      <div className="squareStyle" onClick={this.handleClick}>
+      <div className={this.state.selectedDate ? "squareStyleSelected" : "squareStyle"} onClick={this.handleClick}>
         <p
           id={this.state.active ? "active" : "empty"}
           className={this.state.selected ? "selected" : "notSelected"}

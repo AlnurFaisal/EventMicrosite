@@ -11,6 +11,7 @@ class Calendar extends Component {
     super(props);
     this.state = {
       currentMonth: props.currMonth,
+      selectedDate: dateFns.format(props.currMonth, "DD"),
       currMonthStart: dateFns.startOfMonth(props.currMonth),
       dayValue: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
       currSelectedIndex: null,
@@ -98,6 +99,7 @@ class Calendar extends Component {
                         getWorkshopDetails={this.props.getWorkshopDetails}
                         getTalkDetails={this.props.getTalkDetails}
                         toggleSidebar={this.toggleSidebar.bind(this)}
+                        checkSelectedDate={this.checkSelectedDate.bind(this)}
                       />
                     );
                   } else {
@@ -116,7 +118,7 @@ class Calendar extends Component {
                 className={this.state.showSidebar ? "showSide" : "hideSide"}
               >
                 <CardHeader className="sidebar_header">
-                  {this.state.sideDate}{" "}{dateFns.format(this.state.currentMonth, "MMMM YYYY")}
+                  {this.state.sideDate}{" "}{dateFns.format(this.state.currentMonth, "MMM YYYY")}
                 </CardHeader>
                 <CardBody className="sidebar_body">
                   {this.state.sideTime &&
@@ -138,6 +140,14 @@ class Calendar extends Component {
         </div>
       </div>
     );
+  }
+
+  checkSelectedDate(cDate) {
+    if(cDate === this.state.selectedDate) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toggleSidebar(sideDate, sideTime, sideTitle, sideType, sideSpeaker, index) {
