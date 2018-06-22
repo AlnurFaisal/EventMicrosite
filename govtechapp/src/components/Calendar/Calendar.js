@@ -11,6 +11,8 @@ class Calendar extends Component {
     super(props);
     this.state = {
       currentMonth: props.currMonth,
+      currMonthStart: dateFns.startOfMonth(props.currMonth),
+      dayValue: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
       currSelectedIndex: null,
       eventDates: props.eventDates,
       showSidebar: false,
@@ -33,14 +35,15 @@ class Calendar extends Component {
   }
 
   render() {
-    const currMonthStartDay = this.state.currentMonth.startDay;
+    const currMonthDays = dateFns.getDaysInMonth(this.state.currentMonth);
+    const currMonthStartDay = dateFns.format(this.state.currMonthStart, "ddd");
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];
     return (
       <div className="row calendar">
         <div className="col-md-12 col-sm-12 col-xs-12">
           <h2 className="month">
             <i class="fas fa-arrow-circle-left icon" />{" "}
-            {dateFns.format(this.props.currMonth, "MMMM YYYY")}{" "}
+            {dateFns.format(this.state.currentMonth, "MMMM YYYY")}{" "}
             <i class="fas fa-arrow-circle-right icon" />
           </h2>
           <div className="row">
@@ -83,7 +86,7 @@ class Calendar extends Component {
                 </div>
                 {this.state.dates.map((element, i) => {
                   if (
-                    i < this.state.currentMonth.days + currMonthDayValue &&
+                    i < currMonthDays + currMonthDayValue &&
                     i >= currMonthDayValue
                   ) {
                     return (
@@ -113,7 +116,7 @@ class Calendar extends Component {
                 className={this.state.showSidebar ? "showSide" : "hideSide"}
               >
                 <CardHeader className="sidebar_header">
-                  {this.state.sideDate} May 2018
+                  {this.state.sideDate}{" "}{dateFns.format(this.state.currentMonth, "MMMM YYYY")}
                 </CardHeader>
                 <CardBody className="sidebar_body">
                   {this.state.sideTime &&
@@ -138,7 +141,7 @@ class Calendar extends Component {
   }
 
   toggleSidebar(sideDate, sideTime, sideTitle, sideType, sideSpeaker, index) {
-    const currMonthStartDay = this.state.currentMonth.startDay;
+    const currMonthStartDay = dateFns.format(this.state.currMonthStart, "ddd");
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];
     let eventDates = this.state.eventDates;
     let eventDate = this.state.eventDates[index - currMonthDayValue];
@@ -207,28 +210,19 @@ class Calendar extends Component {
   generateDates() {
     // use the date-fns module to reduce the lines of code to generate the dates for the calendar component
     const dates = [];
-    const currMonthStartDay = this.state.currentMonth.startDay;
-    const currMonthDayValue = this.state.dayValue[currMonthStartDay];
-    const previousMonthDays = this.state.previousMonth.days;
-    const currMonthDays = this.state.currentMonth.days;
-    let j = currMonthDayValue - 1;
-    let nextMonthDate = 1;
+    const { currentMonth, currMonthStart } = this.state;
+    const dateFormat = "DD";
+    const currMonthEnd = dateFns.endOfMonth(currMonthStart);
+    const startDate = dateFns.startOfWeek(currMonthStart);
+    const endDate = dateFns.endOfWeek(currMonthEnd);
 
-    for (let i = 0; i < 35; i++) {
-      if (i < currMonthDayValue) {
-        console.log("Here!");
-        dates[i] = previousMonthDays - j;
-        j--;
-      } else if (i > currMonthDays + 1) {
-        dates[i] = nextMonthDate;
-        nextMonthDate++;
-      } else {
-        console.log("Now Here!");
-        dates[i] =
-          i + 1 - currMonthDayValue < 10
-            ? "0" + (i + 1 - currMonthDayValue)
-            : i + 1 - currMonthDayValue;
-      }
+    let day  = startDate;
+    let formattedDate = "";
+
+    while(day <= endDate) {
+      formattedDate = dateFns.format(day, dateFormat);
+      dates.push(formattedDate);
+      day = dateFns.addDays(day, 1);
     }
 
     return dates;
