@@ -1,33 +1,25 @@
 import React, { Component } from "react";
 import NavigationBar from "../NavigationBar/NavigationBar";
 import { Jumbotron } from "reactstrap";
-import { Workshop, Talk, calendarDate } from "../SeedData/SeedData";
+import { calendarDate } from "../SeedData/SeedData";
 import Calendar from "../Calendar/Calendar";
-import getDaysInMonth from 'date-fns/get_days_in_month'
+import getDaysInMonth from "date-fns/get_days_in_month";
+import addMonths from "date-fns/add_months";
+import subMonths from "date-fns/sub_months";
 import "./myevent.css";
 
 class MyEvent extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      eventDates: [],
-      workshops: Workshop(),
-      talks: Talk(),
-      currentMonth: new Date()
+      currMonthDates: calendarDate(getDaysInMonth(props.currentMonth)),
+      currentMonth: props.currentMonth,
+      selectedDate: new Date()
     };
-
-    this.generateEventDates = this.generateEventDates.bind(this);
-  }
-
-  componentWillMount() {
-    const eventDates = this.generateEventDates();
-    this.setState({
-      eventDates: eventDates
-    });
   }
 
   render() {
-    console.log(this.state.eventDates);
+    console.log(this.state.currMonthDates);
     return (
       <div>
         <NavigationBar />
@@ -42,12 +34,11 @@ class MyEvent extends Component {
               </div>
             </div>
             <Calendar
-              eventDates={this.state.eventDates}
-              getWorkshopDetails={this.getWorkshopDetails.bind(this)}
-              getTalkDetails={this.getTalkDetails.bind(this)}
+              currMonthDates={this.state.currMonthDates}
               prevMonth={this.prevMonth.bind(this)}
               nextMonth={this.nextMonth.bind(this)}
               currMonth={this.state.currentMonth}
+              selectedDate={this.state.selectedDate}
             />
           </div>
         </Jumbotron>
@@ -55,88 +46,18 @@ class MyEvent extends Component {
     );
   }
 
-  getWorkshopDetails(id) {
-    const workshops = this.state.workshops;
-    const details = {
-      short: null,
-      title: null,
-      startTime: null,
-      type: "workshop",
-      time: null,
-      speaker: null
-    };
-    let store = null;
-
-    for (let i = 0; i < workshops.length; i++) {
-      if (workshops[i].id === id) {
-        store = workshops[i].title.substring(0, 12);
-        details.short = store;
-        details.startTime = workshops[i].startTime;
-        details.time = workshops[i].time;
-        details.title = workshops[i].title;
-        details.speaker = workshops[i].speaker;
-      }
-    }
-    return details;
-  }
-
   nextMonth() {
-
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: addMonths(currentMonth, 1)
+    });
   }
 
   prevMonth() {
-
-  }
-
-  getTalkDetails(id) {
-    const talks = this.state.talks;
-    const details = {
-      short: null,
-      title: null,
-      startTime: null,
-      type: "talk",
-      time: null,
-      speaker: null
-    };
-    let store = null;
-
-    for (let i = 0; i < talks.length; i++) {
-      if (talks[i].id === id) {
-        console.log("I am here!");
-        store = talks[i].title.substring(0, 10);
-        details.short = store;
-        details.startTime = talks[i].startTime;
-        details.time = talks[i].time;
-        details.title = talks[i].title;
-        details.speaker = talks[i].speaker;
-      }
-    }
-    return details;
-  }
-
-  generateEventDates() {
-    const Workshops = this.state.workshops;
-    const Talks = this.state.talks;
-    let calendarDates = calendarDate(getDaysInMonth(this.state.currentMonth));
-    // find all workshop/talk events and map using the id to the relavant dates
-
-    for (let i = 0; i < Workshops.length; i++) {
-      for (let j = 0; j < calendarDates.length; j++) {
-        if (Workshops[i].date === j + 1) {
-          calendarDates[j].workshop.push(Workshops[i].id);
-        }
-      }
-    }
-
-    for (let i = 0; i < Talks.length; i++) {
-      for (let j = 0; j < calendarDates.length; j++) {
-        if (Talks[i].date === j + 1) {
-          calendarDates[j].talk.push(Talks[i].id);
-        }
-      }
-    }
-
-    return calendarDates;
+    const { currentMonth } = this.state;
+    this.setState({
+      currentMonth: subMonths(currentMonth, 1)
+    });
   }
 }
 

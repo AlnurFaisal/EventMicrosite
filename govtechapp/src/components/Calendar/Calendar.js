@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
+import {
+  generateSelectedDate,
+  generateEventDates,
+  generateDates
+} from "../SeedData/SeedData";
 import dateFns from "date-fns";
 import Square from "../Square/Square";
 import GreyedSquare from "../GreyedSquare/GreyedSquare";
@@ -11,31 +16,27 @@ class Calendar extends Component {
     super(props);
     this.state = {
       currentMonth: props.currMonth,
-      selectedDate: dateFns.format(props.currMonth, "DD"),
+      selectedDate: generateSelectedDate(
+        props.currMonth.getTime(),
+        props.selectedDate.getTime()
+      ),
       currMonthStart: dateFns.startOfMonth(props.currMonth),
       dayValue: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
       currSelectedIndex: null,
-      eventDates: props.eventDates,
+      eventDates: generateEventDates(props.currMonthDates),
       showSidebar: false,
       sideDate: null,
       sideTime: [],
       sideTitle: [],
       sideType: [],
       sideSpeaker: [],
-      dates: []
+      dates: generateDates(props.currMonth)
     };
-
-    this.generateDates = this.generateDates.bind(this);
-  }
-
-  componentWillMount() {
-    const generateDates = this.generateDates();
-    this.setState({
-      dates: generateDates
-    });
   }
 
   render() {
+    console.log(this.state.eventDates);
+    console.log(this.state.dates);
     const currMonthDays = dateFns.getDaysInMonth(this.state.currentMonth);
     const currMonthStartDay = dateFns.format(this.state.currMonthStart, "ddd");
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];
@@ -43,9 +44,15 @@ class Calendar extends Component {
       <div className="row calendar">
         <div className="col-md-12 col-sm-12 col-xs-12">
           <h2 className="month">
-            <i class="fas fa-arrow-circle-left icon" />{" "}
+            <i
+              class="fas fa-arrow-circle-left icon"
+              onClick={this.props.prevMonth()}
+            />{" "}
             {dateFns.format(this.state.currentMonth, "MMMM YYYY")}{" "}
-            <i class="fas fa-arrow-circle-right icon" />
+            <i
+              class="fas fa-arrow-circle-right icon"
+              onClick={this.props.nextMonth()}
+            />
           </h2>
           <div className="row">
             <div className="col-md-9 col-xs-12">
@@ -96,8 +103,6 @@ class Calendar extends Component {
                         index={i}
                         cDate={element}
                         eventDate={this.state.eventDates[i - currMonthDayValue]}
-                        getWorkshopDetails={this.props.getWorkshopDetails}
-                        getTalkDetails={this.props.getTalkDetails}
                         toggleSidebar={this.toggleSidebar.bind(this)}
                         checkSelectedDate={this.checkSelectedDate.bind(this)}
                       />
@@ -118,7 +123,8 @@ class Calendar extends Component {
                 className={this.state.showSidebar ? "showSide" : "hideSide"}
               >
                 <CardHeader className="sidebar_header">
-                  {this.state.sideDate}{" "}{dateFns.format(this.state.currentMonth, "MMM YYYY")}
+                  {this.state.sideDate}{" "}
+                  {dateFns.format(this.state.currentMonth, "MMM YYYY")}
                 </CardHeader>
                 <CardBody className="sidebar_body">
                   {this.state.sideTime &&
@@ -143,7 +149,7 @@ class Calendar extends Component {
   }
 
   checkSelectedDate(cDate) {
-    if(cDate === this.state.selectedDate) {
+    if (cDate === this.state.selectedDate) {
       return true;
     } else {
       return false;
@@ -215,27 +221,6 @@ class Calendar extends Component {
         });
       }
     }
-  }
-
-  generateDates() {
-    // use the date-fns module to reduce the lines of code to generate the dates for the calendar component
-    const dates = [];
-    const { currentMonth, currMonthStart } = this.state;
-    const dateFormat = "DD";
-    const currMonthEnd = dateFns.endOfMonth(currMonthStart);
-    const startDate = dateFns.startOfWeek(currMonthStart);
-    const endDate = dateFns.endOfWeek(currMonthEnd);
-
-    let day  = startDate;
-    let formattedDate = "";
-
-    while(day <= endDate) {
-      formattedDate = dateFns.format(day, dateFormat);
-      dates.push(formattedDate);
-      day = dateFns.addDays(day, 1);
-    }
-
-    return dates;
   }
 }
 
