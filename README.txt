@@ -5,4 +5,5 @@ Reactstrap,
 React-Router-Dom,
 UUID,
 React,
-React-script
+React-script,
+date-fns

@@ -36,7 +36,6 @@ class Calendar extends Component {
 
   render() {
     console.log(this.state.eventDates);
-    console.log(this.state.dates);
     const currMonthDays = dateFns.getDaysInMonth(this.state.currentMonth);
     const currMonthStartDay = dateFns.format(this.state.currMonthStart, "ddd");
     const currMonthDayValue = this.state.dayValue[currMonthStartDay];
@@ -46,12 +45,10 @@ class Calendar extends Component {
           <h2 className="month">
             <i
               class="fas fa-arrow-circle-left icon"
-              onClick={this.props.prevMonth()}
             />{" "}
             {dateFns.format(this.state.currentMonth, "MMMM YYYY")}{" "}
             <i
               class="fas fa-arrow-circle-right icon"
-              onClick={this.props.nextMonth()}
             />
           </h2>
           <div className="row">

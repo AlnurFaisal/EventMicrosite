@@ -14,7 +14,7 @@ class MyEvent extends Component {
     this.state = {
       currMonthDates: calendarDate(getDaysInMonth(props.currentMonth)),
       currentMonth: props.currentMonth,
-      selectedDate: new Date()
+      selectedDate: props.selectedDate
     };
   }
 

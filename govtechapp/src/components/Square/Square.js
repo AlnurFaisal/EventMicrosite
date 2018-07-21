@@ -26,6 +26,7 @@ class Square extends Component {
 
   render() {
     console.log(this.props.eventDate.selected);
+    console.log(this.state.selectedDate);
     return (
       <div
         className={
@@ -40,7 +41,7 @@ class Square extends Component {
           <strong>{this.props.cDate}</strong>
         </p>
         <br />
-        {this.state.events.map((elements, i) => {
+        {this.state.events && this.state.events.map((elements, i) => {
           return (
             <div key={i}>
               <span className={elements.type}>{elements.short}..</span>
