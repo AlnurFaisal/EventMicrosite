@@ -1,11 +1,18 @@
 {
-  "name": "govtech",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "Alnur_Faisal <alnurfaisal@outlook.com>",
-  "license": "MIT",
+  "name": "govtechapp",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "create-react-app": "^1.5.2",
+    "bootstrap": "^4.1.1",
+    "date-fns": "^1.29.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "reactstrap": "^6.0.1",
+    "uuid": "^3.2.1"
+  },
+  "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
